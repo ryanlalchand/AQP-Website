@@ -1,7 +1,7 @@
 # AQP-Website
 Building a UI for https://datalab.ysu.edu/ to run database comparison tests
 
-##Run the app
+## Run the app
 Clone the repo to your own machine
 
 Open in your editor of choice
