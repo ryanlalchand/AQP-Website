@@ -1,5 +1,5 @@
 var mysql      = require('mysql');
-const {credentials} = require('../credentials/credentials.js');
+const {credentials} = require('./credentials/credentials.js');
 
 var connection = mysql.createConnection({
   host     : credentials.host,
