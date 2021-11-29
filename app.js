@@ -1,16 +1,20 @@
-var mysql = require('mysql');
+var mysql      = require('mysql');
+const {credentials} = require('../credentials/credentials.js');
 
-var con = mysql.createConnection({
-  host: "localhost",
-  user: "yourusername",
-  password: "yourpassword"
+var connection = mysql.createConnection({
+  host     : credentials.host,
+  user     : credentials.user,
+  password : credentials.password,
+  database : '10MB'
 });
+ 
+connection.connect(function(err) {
+  if (err) {
+    console.error('error connecting: ' + err.stack);
+    return;
+  }
+ 
+  console.log('connected as id ' + connection.threadId);
 
-con.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected!");
-  con.query(sql, function (err, result) {
-    if (err) throw err;
-    console.log("Result: " + result);
-  });
+  connection.end();
 });
