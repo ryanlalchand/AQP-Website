@@ -6,6 +6,8 @@ var connection = mysql.createConnection({
   user: credentials.user,
   password: credentials.password,
   database: "10MB",
+  multipleStatements: true, //needed to run multiple queries
+  local_infile: true, //to mitigate error when loading data from local file
 });
 
 connection.connect(function (err) {
@@ -25,13 +27,29 @@ var app = require("express");
 app.use(express.static("public"));
 
 app.get("/", function (request, response) {
-  response.sendFile(__dirname + "/index.html");
+  response.sendFile(__dirname + "./public/index.html");
 });
 
 app.get("/DBrequest", function (request, response) {
   let query = request.query;
 
-  connection.query(query, function (err, result) {
+  switch (query) {
+    case "query1":
+      queryFile = fs.readFileSync("./queries/query1.sql").toString();
+      break;
+    case "query2":
+      queryFile = fs.readFileSync("./queries/query2.sql").toString();
+      break;
+    case "query3":
+      queryFile = fs.readFileSync("./queries/query3.sql").toString();
+      break;
+    default:
+      //user didn't select a query, resend page
+      response.sendFile(__dirname + "./public/index.html");
+      break;
+  }
+
+  connection.query(queryFile, function (err, result) {
     if (err) throw err;
     console.log("Result: " + result);
 
