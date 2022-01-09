@@ -12,8 +12,10 @@ Open in your editor of choice
 
 You will need to have installed Node.js v16.13.0
 
-At this time, you will need a MySQL instance on your machine with the correct files. In the future, these will be provided by the Data Lab server.
+At this time, you will need a MySQL server locally installed and create a database called "10MB". In the future, these will be provided by the Data Lab server.
 
 Run `npm install` to install dependencies
 
-Run `node app.js` to start the server, navigate to http://localhost:8085 in your browser
+Run `cd 10MB_data_files` then run `node db_config.js` to create the database and tables
+
+You can then `cd ..` and run `node app.js` to start the server, navigate to http://localhost:8085 in your browser

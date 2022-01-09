@@ -1,32 +1,17 @@
 var mysql = require("mysql");
+const fs = require("fs");
 const { credentials } = require("../credentials/credentials.js");
 
-const tables = [
-  "customer",
-  "line_item",
-  "nation",
-  "order",
-  "part",
-  "partsupp",
-  "region",
-  "supplier",
-];
-const files = [
-  "customer.tbl",
-  "lineitem.tbl",
-  "nation.tbl",
-  "orders.tbl",
-  "part.tbl",
-  "partsupp.tbl",
-  "region.tbl",
-  "supplier.tbl",
-];
+// Read the SQL file
+const importSQL = fs.readFileSync("./mysql_config.sql").toString();
 
 var connection = mysql.createConnection({
   host: credentials.host,
   user: credentials.user,
   password: credentials.password,
   database: "10MB",
+  multipleStatements: true,
+  local_infile: true,
 });
 
 connection.connect(function (err) {
@@ -37,23 +22,15 @@ connection.connect(function (err) {
 
   console.log("connected as id " + connection.threadId);
 
-  /*connection.query('CREATE DATABASE IF NOT EXISTS ' + '10MB', function (err) {
+  // connection.query("CREATE DATABASE IF NOT EXISTS " + "10MB", function (err) {
+  //   if (err) throw err;
+  //   console.log("Database created");
+  // });
+
+  connection.query(importSQL, function (err) {
     if (err) throw err;
-    console.log('Database created');
+    console.log("Database populated");
   });
-  */
 
-  //   for (var i = 0; i < tables.length; i++) {
-  //     connection.query('CREATE TABLE IF NOT EXISTS ' + tables[i] + ' (id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY (id))', function (err) {
-  //       if (err) throw err;
-  //       console.log('Table created');
-  //     });
-
-  //     connection.query("LOAD DATA LOCAL INFILE " + files[i] + " INTO TABLE " + tables[i] + " FIELDS TERMINATED BY '|'", function (err) {
-  //         if (err) throw err;
-  //         console.log('Data entered');
-  //       }
-  //     );
-  //   }
-  //   connection.end();
+  connection.end();
 });
