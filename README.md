@@ -1,6 +1,6 @@
 # AQP-Website
 
-Building a UI for https://datalab.ysu.edu/ to run database comparison tests
+Building a UI for [the YSU Data Lab](https://datalab.ysu.edu/) to run database comparison tests
 
 Used `mkcert` to create https certificate and key for localhost
 
@@ -18,4 +18,4 @@ Run `npm install` to install dependencies
 
 Run `cd 10MB_data_files` then run `node db_config.js` to create the database and tables
 
-You can then `cd ..` and run `node app.js` to start the server, navigate to http://localhost:8085 in your browser
+You can then `cd ..` and run `node app.js` to start the server, navigate to [localhost:8085](https://localhost:8085) in your browser
