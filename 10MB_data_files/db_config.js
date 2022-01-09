@@ -10,8 +10,8 @@ var connection = mysql.createConnection({
   user: credentials.user,
   password: credentials.password,
   database: "10MB",
-  multipleStatements: true,
-  local_infile: true,
+  multipleStatements: true, //needed to run multiple queries
+  local_infile: true, //to mitigate error when loading data from local file
 });
 
 connection.connect(function (err) {
@@ -22,11 +22,7 @@ connection.connect(function (err) {
 
   console.log("connected as id " + connection.threadId);
 
-  // connection.query("CREATE DATABASE IF NOT EXISTS " + "10MB", function (err) {
-  //   if (err) throw err;
-  //   console.log("Database created");
-  // });
-
+  // Runs entire SQL file in one query
   connection.query(importSQL, function (err) {
     if (err) throw err;
     console.log("Database populated");

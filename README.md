@@ -8,11 +8,11 @@ Used `mkcert` to create https certificate and key for localhost
 
 Clone the repo to your own machine
 
-Open in your editor of choice
+Open directory in your editor/terminal/IDE of choice
 
 You will need to have installed Node.js v16.13.0
 
-At this time, you will need a MySQL server locally installed and create a database called "10MB". In the future, these will be provided by the Data Lab server.
+At this time, you will need a MySQL server locally installed and create a database called "10MB". You will also have to run `set global local_infile=true;` after entering the MySQL command line with `mysql -u root -p`. In the future, these will be provided by the Data Lab server.
 
 Run `npm install` to install dependencies
 
