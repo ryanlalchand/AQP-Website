@@ -1,4 +1,4 @@
-# AQP-Website
+# Capstone
 
 Building a UI for [the YSU Data Lab](https://datalab.ysu.edu/) to run database comparison tests
 
