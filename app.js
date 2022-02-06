@@ -22,39 +22,39 @@ connection.connect(function (err) {
 });
 
 const fs = require("fs");
-
-var app = require("express");
+var express = require("express");
+var app = express();
 app.use(express.static("public"));
 
+var bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 app.get("/", function (request, response) {
-  response.sendFile(__dirname + "./public/index.html");
+  response.sendFile(__dirname + "/public/index.html");
 });
 
 app.get("/DBrequest", function (request, response) {
-  let query = request.query;
-
-  switch (query) {
-    case "query1":
-      queryFile = fs.readFileSync("./queries/query1.sql").toString();
-      break;
-    case "query2":
-      queryFile = fs.readFileSync("./queries/query2.sql").toString();
-      break;
-    case "query3":
-      queryFile = fs.readFileSync("./queries/query3.sql").toString();
-      break;
-    default:
-      //user didn't select a query, resend page
-      response.sendFile(__dirname + "./public/index.html");
-      break;
+  let query = request.body.query;
+  let queryFile = query + ".sql";
+  console.log(queryFile);
+  if (queryFile == ".sql") {
+    response.send(__dirname + "/public/index.html");
+  } else {
+    fs.readFile(__dirname + "/queries/" + queryFile, function (err, data) {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      connection.query(data, function (err, result) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        response.send(JSON.stringify(result));
+      });
+    });
   }
-
-  connection.query(queryFile, function (err, result) {
-    if (err) throw err;
-    console.log("Result: " + result);
-
-    response.send(JSON.stringify(result));
-  });
 });
 
 const https = require("https");
