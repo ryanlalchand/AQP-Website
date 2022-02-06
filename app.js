@@ -23,7 +23,8 @@ connection.connect(function (err) {
 
 const fs = require("fs");
 
-var app = require("express");
+var express = require("express");
+var app = express();
 app.use(express.static("public"));
 
 app.get("/", function (request, response) {
@@ -32,7 +33,7 @@ app.get("/", function (request, response) {
 
 app.get("/DBrequest", function (request, response) {
   let query = request.query;
-
+  var queryFile;
   switch (query) {
     case "query1":
       queryFile = fs.readFileSync("./queries/query1.sql").toString();
@@ -45,7 +46,7 @@ app.get("/DBrequest", function (request, response) {
       break;
     default:
       //user didn't select a query, resend page
-      response.sendFile(__dirname + "./public/index.html");
+      response.sendFile(__dirname + "/public/index.html");
       break;
   }
 
