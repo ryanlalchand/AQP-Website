@@ -12,7 +12,9 @@ async function processForm(e) {
       }),
     });
     const data = await response.json();
-    console.log(data);
+    console.log(JSON.stringify(data[0]));
+
+    document.getElementById("OGanswer").innerHTML = JSON.stringify(data);
   } catch (error) {
     console.log(error);
   }

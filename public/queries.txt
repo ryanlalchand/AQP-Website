@@ -1,3 +1,5 @@
+Queries pulled from Appendix B of David Wilson's Thesis https://etd.ohiolink.edu/apexprod/rws_etd/send_file/send?accession=ysu1544264480082086&disposition=inline
+
 Query 1
 • select count (*) from lineitem,partsupp where l_partkey = ps_partkey
 and l_suppkey = ps_suppkey;
