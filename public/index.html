@@ -35,10 +35,6 @@
     </form>
     <br /><br />
 
-    <script>
-      await fetchData();
-    </script>
-
     <table class="table-auto">
       <thead>
         <tr>
@@ -69,6 +65,15 @@
       </tbody>
     </table>
   </body>
+
+  <script>
+    var form = document.getElementById("form");
+    if (form.attachEvent) {
+      form.attachEvent("submit", processForm);
+    } else {
+      form.addEventListener("submit", processForm);
+    }
+  </script>
 
   <footer>
     <p>
