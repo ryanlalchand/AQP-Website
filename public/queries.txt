@@ -1,111 +1,11 @@
-2.sql
-Query #1
+Query 1
+• select count (*) from lineitem,partsupp where l_partkey = ps_partkey
+and l_suppkey = ps_suppkey;
 
-select
-s_acctbal,
-s_name,
-n_name,
-p_partkey,
-p_mfgr,
-s_address,
-s_phone,
-s_comment
-from
-part,
-supplier,
-partsupp,
-nation,
-region
-where
-p_partkey = ps_partkey
-and s_suppkey = ps_suppkey
-and p_size = 4
-and p_type like '%STEEL'
-and s_nationkey = n_nationkey
-and n_regionkey = r_regionkey
-and r_name = 'MIDDLE EAST'
-and ps_supplycost = (
-select
-min(ps_supplycost)
-from
-partsupp,
-supplier,
-nation,
-region
-where
-p_partkey = ps_partkey
-and s_suppkey = ps_suppkey
-and s_nationkey = n_nationkey
-and n_regionkey = r_regionkey
-and r_name = 'MIDDLE EAST')
-order by
-s_acctbal desc,
-n_name,
-s_name,
-p_partkey;
-
----------------------------------------------------------------
-
-3.sql
 Query 2
+• select count (*) from lineitem,partsupp where l_partkey = ps_partkey
+and l_suppkey = ps_suppkey and ps_availqty > 9000;
 
-select
-l_orderkey,
-sum(l_extendedprice * (1 - l_discount)) as revenue,
-o_orderdate,
-o_shippriority
-from
-customer,
-orders,
-lineitem
-where
-c_mktsegment = 'AUTOMOBILE'
-and c_custkey = o_custkey
-and l_orderkey = o_orderkey
-and o_orderdate < date '1995-03-27'
-and l_shipdate > date '1995-03-27'
-group by
-l_orderkey,
-o_orderdate,
-o_shippriority
-order by
-revenue desc,
-o_orderdate;
-
-------------------------------------------------------------------
-
-18.sql
 Query 3
-
-select
-c_name,
-c_custkey,
-o_orderkey,
-o_orderdate,
-o_totalprice,
-sum(l_quantity)
-from
-customer,
-orders,
-lineitem
-where
-o_orderkey in (
-select
-l_orderkey
-from
-lineitem
-group by
-l_orderkey having
-sum(l_quantity) > 315
-)
-and c_custkey = o_custkey
-and o_orderkey = l_orderkey
-group by
-c_name,
-c_custkey,
-o_orderkey,
-o_orderdate,
-o_totalprice
-order by
-o_totalprice desc,
-o_orderdate;
+• select count (*) from lineitem,partsupp where l_partkey = ps_partkey
+and l_suppkey = ps_suppkey and ps_supplycost < 100;
