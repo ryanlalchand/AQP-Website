@@ -1,5 +1,3 @@
---18.sql Query 3
-
 select
 c_name,
 c_custkey,

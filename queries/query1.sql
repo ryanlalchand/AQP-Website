@@ -1,5 +1,3 @@
---2.sql Query #1
-
 select
 s_acctbal,
 s_name,

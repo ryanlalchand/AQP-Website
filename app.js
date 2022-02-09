@@ -36,24 +36,21 @@ app.get("/", function (request, response) {
 
 app.post("/DBrequest", function (request, response) {
   let query = request.body.query;
-  console.log(query);
-  let queryFile = query + ".sql";
-  console.log(queryFile);
-  if (queryFile == ".sql") {
+  let queryFile = __dirname + "/queries/" + query + ".sql";
+
+  console.log({ query, queryFile });
+
+  if (query == "") {
     response.send(__dirname + "/public/index.html");
   } else {
-    fs.readFile(__dirname + "/queries/" + queryFile, function (err, data) {
+    let queryString = fs.readFileSync(queryFile).toString();
+
+    connection.query(queryString, function (err, result) {
       if (err) {
         console.log(err);
         return;
       }
-      connection.query(data, function (err, result) {
-        if (err) {
-          console.log(err);
-          return;
-        }
-        response.send(JSON.stringify(result));
-      });
+      response.send(JSON.stringify(result));
     });
   }
 });

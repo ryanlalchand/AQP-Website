@@ -1,5 +1,3 @@
---3.sql Query 2
-
 select
 l_orderkey,
 sum(l_extendedprice * (1 - l_discount)) as revenue,
