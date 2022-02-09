@@ -34,8 +34,9 @@ app.get("/", function (request, response) {
   response.sendFile(__dirname + "/public/index.html");
 });
 
-app.get("/DBrequest", function (request, response) {
+app.post("/DBrequest", function (request, response) {
   let query = request.body.query;
+  console.log(query);
   let queryFile = query + ".sql";
   console.log(queryFile);
   if (queryFile == ".sql") {
