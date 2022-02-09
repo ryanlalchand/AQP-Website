@@ -50,6 +50,7 @@ app.post("/DBrequest", function (request, response) {
         console.log(err);
         return;
       }
+      console.log(result); //empty [] right now
       response.send(JSON.stringify(result));
     });
   }
