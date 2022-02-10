@@ -51,7 +51,8 @@ app.post("/DBrequest", function (request, response) {
         return;
       }
       console.log("result: " + JSON.stringify(result));
-      response.send(JSON.stringify(result));
+
+      response.send(result);
     });
   }
 });

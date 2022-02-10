@@ -12,13 +12,12 @@ async function processForm(e) {
       }),
     });
     const data = await response.json();
-    console.log(JSON.stringify(data[0]));
+    console.log(JSON.stringify(data));
 
     document.getElementById("OGanswer").innerHTML = JSON.stringify(data);
   } catch (error) {
     console.log(error);
   }
-
   // You must return false to prevent the default form behavior
   return false;
 }
