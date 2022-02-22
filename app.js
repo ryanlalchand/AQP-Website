@@ -1,7 +1,7 @@
 var mysql = require("mysql");
 const { credentials } = require("./credentials/credentials.js");
 
-var connection = mysql.createConnection({
+var connection10MB = mysql.createConnection({
   host: credentials.host,
   user: credentials.user,
   password: credentials.password,
@@ -10,15 +10,31 @@ var connection = mysql.createConnection({
   local_infile: true, //to mitigate error when loading data from local file
 });
 
-connection.connect(function (err) {
+connection10MB.connect(function (err) {
   if (err) {
     console.error("error connecting: " + err.stack);
     return;
   }
 
-  console.log("connected as id " + connection.threadId);
+  console.log("connected as id " + connection10MB.threadId);
+});
 
-  //connection.end();
+var connection100MB = mysql.createConnection({
+  host: credentials.host,
+  user: credentials.user,
+  password: credentials.password,
+  database: "100MB",
+  multipleStatements: true, //needed to run multiple queries
+  local_infile: true, //to mitigate error when loading data from local file
+});
+
+connection100MB.connect(function (err) {
+  if (err) {
+    console.error("error connecting: " + err.stack);
+    return;
+  }
+
+  console.log("connected as id " + connection100MB.threadId);
 });
 
 const fs = require("fs");
@@ -37,23 +53,35 @@ app.get("/", function (request, response) {
 app.post("/DBrequest", function (request, response) {
   let query = request.body.query;
   let queryFile = __dirname + "/queries/" + query + ".sql";
+  let size = request.body.size;
 
-  console.log({ query, queryFile });
+  console.log({ query, queryFile, size });
 
   if (query == "") {
     response.send(__dirname + "/public/index.html");
   } else {
     let queryString = fs.readFileSync(queryFile).toString();
+    if (size == "10MB") {
+      connection10MB.query(queryString, function (err, result) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log("result: " + JSON.stringify(result));
 
-    connection.query(queryString, function (err, result) {
-      if (err) {
-        console.log(err);
-        return;
-      }
-      console.log("result: " + JSON.stringify(result));
+        response.send(result);
+      });
+    } else if (size == "100MB") {
+      connection100MB.query(queryString, function (err, result) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log("result: " + JSON.stringify(result));
 
-      response.send(result);
-    });
+        response.send(result);
+      });
+    }
   }
 });
 

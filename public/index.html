@@ -4,11 +4,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="./output.css" rel="stylesheet" />
+
+    <link href="./main.css" rel="stylesheet" />
     <script src="./main.js"></script>
   </head>
 
-  <body>
+  <body class="content-center">
     <p>
       To run a comparison, select a query and the size of the database and click
       submit. You can view the queries used
@@ -22,13 +23,11 @@
         <option value="query3">Query 3</option>
       </select>
 
-      <label for="size">Select Size:</label>
+      <label for="size">&nbsp; Select Size:</label>
       <select name="size" id="size">
         <option value="10MB">10MB</option>
-        <!--
-      <option value="100MB">100MB</option>
-      <option value="1GB">1GB</option>
-      --></select>
+        <option value="100MB">100MB</option>
+      </select>
 
       <br /><br />
       <button type="submit">Submit</button>

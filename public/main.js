@@ -9,6 +9,7 @@ async function processForm(e) {
       },
       body: JSON.stringify({
         query: document.getElementById("query").value,
+        size: document.getElementById("size").value,
       }),
     });
     const data = await response.json();
