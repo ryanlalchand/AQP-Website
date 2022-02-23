@@ -16,6 +16,8 @@ At this time, you will need a MySQL server locally installed and create a databa
 
 Run `npm install` to install dependencies
 
-Run `cd 10MB_data_files` then run `node db_config.js` to create the database and tables
+Run `cd TPCH_100MB` then run `node db_config.js` to create the database and tables
+
+Repeat for TPCH_10MB
 
 You can then `cd ..` and run `node app.js` to start the server, navigate to [localhost:8085](https://localhost:8085) in your browser
