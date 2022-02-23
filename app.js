@@ -8,6 +8,7 @@ var connection10MB = mysql.createConnection({
   database: "10MB",
   multipleStatements: true, //needed to run multiple queries
   local_infile: true, //to mitigate error when loading data from local file
+  supportBigNumbers: true, //speaks for itself
 });
 
 connection10MB.connect(function (err) {
@@ -26,6 +27,7 @@ var connection100MB = mysql.createConnection({
   database: "100MB",
   multipleStatements: true, //needed to run multiple queries
   local_infile: true, //to mitigate error when loading data from local file
+  supportBigNumbers: true, //speaks for itself
 });
 
 connection100MB.connect(function (err) {
@@ -78,8 +80,11 @@ app.post("/DBrequest", function (request, response) {
           return;
         }
         console.log("result: " + JSON.stringify(result));
+        console.log(result[0]["count (*)"]);
 
-        response.send(result);
+        //var resultJSON = Object.assign({}, result[0]["count (*)"]);
+
+        response.send(JSON.stringify(result[0]["count (*)"]));
       });
     }
   }
