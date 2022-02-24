@@ -70,8 +70,11 @@ app.post("/DBrequest", function (request, response) {
           return;
         }
         console.log("result: " + JSON.stringify(result));
+        console.log(result[0]["count (*)"]);
 
-        response.send(result);
+        //var resultJSON = Object.assign({}, result[0]["count (*)"]);
+
+        response.send(JSON.stringify(result[0]["count (*)"]));
       });
     } else if (size == "100MB") {
       connection100MB.query(queryString, function (err, result) {

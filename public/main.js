@@ -1,11 +1,9 @@
-import { easytimer } from "./easytimer.min.js";
-let timer = easytimer.Timer();
-
 async function processForm(e) {
   if (e.preventDefault) e.preventDefault();
   console.log(e);
   try {
-    timer.start();
+    let timer = new easytimer.Timer();
+    timer.start({ precision: "secondTenths" });
 
     const response = await fetch("/DBrequest", {
       method: "POST",
@@ -22,11 +20,11 @@ async function processForm(e) {
     console.log(JSON.stringify(data));
     document.getElementById("OGanswer").innerHTML = JSON.stringify(data);
 
-    timer.stop();
+    // timer.stop();
     console.log(timer.getTimeValues().toString());
-    document.getElementById("OGtime").innerHTML = timer
-      .getTimeValues()
-      .toString();
+    document.getElementById("OGtime").innerHTML = `${
+      timer.getTimeValues().secondTenths
+    }&nbsp;tenths of a second`;
   } catch (error) {
     console.log(error);
   }
