@@ -1,23 +1,23 @@
 var mysql = require("mysql");
 const { credentials } = require("./credentials/credentials.js");
 
-var connection10MB = mysql.createConnection({
+var connection1GB = mysql.createConnection({
   host: credentials.host,
   user: credentials.user,
   password: credentials.password,
-  database: "10MB",
+  database: "1GB",
   multipleStatements: true, //needed to run multiple queries
   local_infile: true, //to mitigate error when loading data from local file
   supportBigNumbers: true, //speaks for itself
 });
 
-connection10MB.connect(function (err) {
+connection1GB.connect(function (err) {
   if (err) {
     console.error("error connecting: " + err.stack);
     return;
   }
 
-  console.log("connected as id " + connection10MB.threadId);
+  console.log("connected as id " + connection1GB.threadId);
 });
 
 var connection100MB = mysql.createConnection({
@@ -63,8 +63,8 @@ app.post("/DBrequest", function (request, response) {
     response.send(__dirname + "/public/index.html");
   } else {
     let queryString = fs.readFileSync(queryFile).toString();
-    if (size == "10MB") {
-      connection10MB.query(queryString, function (err, result) {
+    if (size == "1GB") {
+      connection1GB.query(queryString, function (err, result) {
         if (err) {
           console.log(err);
           return;

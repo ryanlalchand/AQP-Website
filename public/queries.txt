@@ -1,13 +1,11 @@
 Queries pulled from Appendix B of David Wilson's Thesis https://etd.ohiolink.edu/apexprod/rws_etd/send_file/send?accession=ysu1544264480082086&disposition=inline
 
-Query 1
-• select count (*) from lineitem,partsupp where l_partkey = ps_partkey
-and l_suppkey = ps_suppkey;
+Query 1:
+select count (*) from lineitem,orders where l_orderkey = o_orderkey;
 
-Query 2
-• select count (*) from lineitem,partsupp where l_partkey = ps_partkey
-and l_suppkey = ps_suppkey and ps_availqty > 9000;
 
-Query 3
-• select count (*) from lineitem,partsupp where l_partkey = ps_partkey
-and l_suppkey = ps_suppkey and ps_supplycost < 100;
+Query 2:
+select count (*) from lineitem,orders where l_orderkey = o_orderkey and o_totalprice >= 400000;
+
+Query 3:
+select count (*) from lineitem,orders where l_orderkey = o_orderkey and l_quantity < 20;
