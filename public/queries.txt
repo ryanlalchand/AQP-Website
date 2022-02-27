@@ -1,11 +1,11 @@
 Queries pulled from Appendix B of David Wilson's Thesis https://etd.ohiolink.edu/apexprod/rws_etd/send_file/send?accession=ysu1544264480082086&disposition=inline
 
 Query 1:
-select count (*) from lineitem,orders where l_orderkey = o_orderkey;
+select count(*) from lineitem where l_orderkey > 10;
 
 
 Query 2:
-select count (*) from lineitem,orders where l_orderkey = o_orderkey and o_totalprice >= 400000;
+select count(*) from orders where o_totalprice >= 400000;
 
 Query 3:
-select count (*) from lineitem,orders where l_orderkey = o_orderkey and l_quantity < 20;
+select count(*) from lineitem where l_quantity < 20;
