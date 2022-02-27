@@ -1,1 +1,1 @@
-select count(*) from lineitem, orders where l_orderkey = o_orderkey;
+select count(*) from lineitem where l_orderkey > 10;

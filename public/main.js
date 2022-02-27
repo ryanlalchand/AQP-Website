@@ -87,9 +87,9 @@ async function processForm(e) {
   OGanswer = parseInt(OGanswer);
   OGtimer.pause();
 
-  var relativeError = Math.trunc(
+  var relativeError = (
     Math.abs((AQPanswer - OGanswer) / OGanswer) * 100
-  );
+  ).toFixed(4);
 
   document.getElementById(
     "relativeError"
