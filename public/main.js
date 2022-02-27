@@ -17,7 +17,7 @@ async function getOGanswer() {
       OGanswer[0]["count(*)"]
     );
 
-    return;
+    return OGanswer[0]["count(*)"];
   } catch (error) {
     console.log(error);
   }
@@ -42,7 +42,7 @@ async function getAQPanswer() {
       AQPanswer[0]["count(*)"] * 100
     );
 
-    return;
+    return AQPanswer[0]["count(*)"] * 100;
   } catch (error) {
     console.log(error);
   }
@@ -57,17 +57,6 @@ async function processForm(e) {
   let AQPtimer = new easytimer.Timer();
   AQPtimer.start({ precision: "secondTenths" });
 
-  OGtimer.addEventListener("secondTenthsUpdated", function (e) {
-    document.getElementById(
-      "OGtime"
-    ).innerHTML = `${OGtimer.getTimeValues().toString([
-      "hours",
-      "minutes",
-      "seconds",
-      "secondTenths",
-    ])}`;
-  });
-
   AQPtimer.addEventListener("secondTenthsUpdated", function (e) {
     document.getElementById(
       "AQPtime"
@@ -79,32 +68,42 @@ async function processForm(e) {
     ])}`;
   });
 
-  await getAQPanswer()
-    .then(AQPtimer.stop())
-    .then(
-      (document.getElementById(
-        "AQPtime"
-      ).innerHTML = `${AQPtimer.getTotalTimeValues().toString([
-        "hours",
-        "minutes",
-        "seconds",
-        "secondTenths",
-      ])}`)
-    );
+  OGtimer.addEventListener("secondTenthsUpdated", function (e) {
+    document.getElementById(
+      "OGtime"
+    ).innerHTML = `${OGtimer.getTimeValues().toString([
+      "hours",
+      "minutes",
+      "seconds",
+      "secondTenths",
+    ])}`;
+  });
 
-  await getOGanswer()
-    .then(AQPtimer.stop())
-    .then(
-      (document.getElementById(
-        "AQPtime"
-      ).innerHTML = `${AQPtimer.getTotalTimeValues().toString([
-        "hours",
-        "minutes",
-        "seconds",
-        "secondTenths",
-      ])}`)
-    );
+  let AQPanswer = await getAQPanswer();
+  AQPanswer = parseInt(AQPanswer);
+  AQPtimer.pause();
 
+  let OGanswer = await getOGanswer();
+  OGanswer = parseInt(OGanswer);
+  OGtimer.pause();
+
+  var relativeError = Math.trunc(
+    Math.abs((AQPanswer - OGanswer) / OGanswer) * 100
+  );
+
+  document.getElementById(
+    "relativeError"
+  ).innerHTML = `${relativeError.toString()}%`;
+
+  if (AQPtimer.getTotalTimeValues().secondTenths == 0) {
+    var speedBoost = parseInt(OGtimer.getTotalTimeValues().secondTenths) / 0.5;
+  } else {
+    var speedBoost =
+      parseInt(OGtimer.getTotalTimeValues().secondTenths) /
+      parseInt(AQPtimer.getTotalTimeValues().secondTenths);
+  }
+
+  document.getElementById("speedBoost").innerHTML = `${speedBoost.toString()}x`;
   // You must return false to prevent the default form behavior
   return false;
 }

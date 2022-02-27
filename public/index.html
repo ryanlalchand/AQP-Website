@@ -8,14 +8,6 @@
     <link href="./main.css" rel="stylesheet" />
     <script src="./main.js"></script>
     <script src="./easytimer.min.js"></script>
-    <script>
-      var form = document.getElementById("form");
-      if (form.attachEvent) {
-        form.attachEvent("submit", processForm);
-      } else {
-        form.addEventListener("submit", processForm);
-      }
-    </script>
   </head>
 
   <body class="content-center">
@@ -65,11 +57,11 @@
         </tr>
         <tr>
           <th>Relative Error</th>
-          <td id="relativeError"></td>
+          <td colspan="2" id="relativeError"></td>
         </tr>
         <tr>
           <th>Speed Boost</th>
-          <td id="speedBoost"></td>
+          <td colspan="2" id="speedBoost"></td>
         </tr>
       </tbody>
     </table>
@@ -101,4 +93,12 @@
       </script>
     </p>
   </footer>
+  <script>
+    var form = document.getElementById("form");
+    if (form.attachEvent) {
+      form.attachEvent("submit", processForm);
+    } else {
+      form.addEventListener("submit", processForm);
+    }
+  </script>
 </html>
