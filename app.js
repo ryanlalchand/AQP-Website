@@ -52,7 +52,7 @@ app.get("/", function (request, response) {
   response.sendFile(__dirname + "/public/index.html");
 });
 
-app.post("/DBrequest", function (request, response) {
+app.post("/OGanswer", function (request, response) {
   let query = request.body.query;
   let queryFile = __dirname + "/queries/" + query + ".sql";
   let size = request.body.size;
@@ -70,11 +70,10 @@ app.post("/DBrequest", function (request, response) {
           return;
         }
         console.log("result: " + JSON.stringify(result));
-        console.log(result[0]["count (*)"]);
 
-        //var resultJSON = Object.assign({}, result[0]["count (*)"]);
+        var resultJSON = Object.assign({}, result);
 
-        response.send(JSON.stringify(result[0]["count (*)"]));
+        response.send(result);
       });
     } else if (size == "100MB") {
       connection100MB.query(queryString, function (err, result) {
@@ -83,11 +82,49 @@ app.post("/DBrequest", function (request, response) {
           return;
         }
         console.log("result: " + JSON.stringify(result));
-        console.log(result[0]["count (*)"]);
 
-        //var resultJSON = Object.assign({}, result[0]["count (*)"]);
+        var resultJSON = Object.assign({}, result);
 
-        response.send(JSON.stringify(result[0]["count (*)"]));
+        response.send(resultJSON);
+      });
+    }
+  }
+});
+
+app.post("/AQPanswer", function (request, response) {
+  let query = request.body.query;
+  let queryFile = __dirname + "/queries/" + query + "AQP.sql";
+  let size = request.body.size;
+
+  console.log({ query, queryFile, size });
+
+  if (query == "") {
+    response.send(__dirname + "/public/index.html");
+  } else {
+    let queryString = fs.readFileSync(queryFile).toString();
+    if (size == "1GB") {
+      connection1GB.query(queryString, function (err, result) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log("result: " + JSON.stringify(result));
+
+        var resultJSON = Object.assign({}, result);
+
+        response.send(resultJSON);
+      });
+    } else if (size == "100MB") {
+      connection100MB.query(queryString, function (err, result) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log("result: " + JSON.stringify(result));
+
+        var resultJSON = Object.assign({}, result);
+
+        response.send(resultJSON);
       });
     }
   }

@@ -8,7 +8,14 @@
     <link href="./main.css" rel="stylesheet" />
     <script src="./main.js"></script>
     <script src="./easytimer.min.js"></script>
-    <script></script>
+    <script>
+      var form = document.getElementById("form");
+      if (form.attachEvent) {
+        form.attachEvent("submit", processForm);
+      } else {
+        form.addEventListener("submit", processForm);
+      }
+    </script>
   </head>
 
   <body class="content-center">
@@ -33,6 +40,7 @@
 
       <br /><br />
       <button type="submit">Submit</button>
+      <button type="reload" onclick="location.reload();">Reset</button>
     </form>
     <br /><br />
 
@@ -52,8 +60,8 @@
         </tr>
         <tr>
           <th>Time</th>
-          <td id="OGtime"></td>
-          <td id="AQPtime"></td>
+          <td id="OGtime">00:00:00:0</td>
+          <td id="AQPtime">00:00:00:0</td>
         </tr>
         <tr>
           <th>Relative Error</th>
@@ -66,15 +74,6 @@
       </tbody>
     </table>
   </body>
-
-  <script>
-    var form = document.getElementById("form");
-    if (form.attachEvent) {
-      form.attachEvent("submit", processForm);
-    } else {
-      form.addEventListener("submit", processForm);
-    }
-  </script>
 
   <footer>
     <p>

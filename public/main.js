@@ -1,11 +1,6 @@
-async function processForm(e) {
-  if (e.preventDefault) e.preventDefault();
-  console.log(e);
+async function getOGanswer() {
   try {
-    let timer = new easytimer.Timer();
-    timer.start({ precision: "secondTenths" });
-
-    const response = await fetch("/DBrequest", {
+    const OGresponse = await fetch("/OGanswer", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -16,18 +11,100 @@ async function processForm(e) {
       }),
     });
 
-    const data = await response.json();
-    console.log(JSON.stringify(data));
-    document.getElementById("OGanswer").innerHTML = JSON.stringify(data);
+    const OGanswer = await OGresponse.json();
 
-    // timer.stop();
-    console.log(timer.getTimeValues().toString());
-    document.getElementById("OGtime").innerHTML = `${
-      timer.getTimeValues().secondTenths
-    }&nbsp;tenths of a second`;
+    document.getElementById("OGanswer").innerHTML = JSON.stringify(
+      OGanswer[0]["count(*)"]
+    );
+
+    return;
   } catch (error) {
     console.log(error);
   }
+}
+
+async function getAQPanswer() {
+  try {
+    const AQPresponse = await fetch("/AQPanswer", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query: document.getElementById("query").value,
+        size: document.getElementById("size").value,
+      }),
+    });
+
+    const AQPanswer = await AQPresponse.json();
+
+    document.getElementById("AQPanswer").innerHTML = JSON.stringify(
+      AQPanswer[0]["count(*)"] * 100
+    );
+
+    return;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function processForm(e) {
+  if (e.preventDefault) e.preventDefault();
+  console.log(e);
+
+  let OGtimer = new easytimer.Timer();
+  OGtimer.start({ precision: "secondTenths" });
+  let AQPtimer = new easytimer.Timer();
+  AQPtimer.start({ precision: "secondTenths" });
+
+  OGtimer.addEventListener("secondTenthsUpdated", function (e) {
+    document.getElementById(
+      "OGtime"
+    ).innerHTML = `${OGtimer.getTimeValues().toString([
+      "hours",
+      "minutes",
+      "seconds",
+      "secondTenths",
+    ])}`;
+  });
+
+  AQPtimer.addEventListener("secondTenthsUpdated", function (e) {
+    document.getElementById(
+      "AQPtime"
+    ).innerHTML = `${AQPtimer.getTimeValues().toString([
+      "hours",
+      "minutes",
+      "seconds",
+      "secondTenths",
+    ])}`;
+  });
+
+  await getAQPanswer()
+    .then(AQPtimer.stop())
+    .then(
+      (document.getElementById(
+        "AQPtime"
+      ).innerHTML = `${AQPtimer.getTotalTimeValues().toString([
+        "hours",
+        "minutes",
+        "seconds",
+        "secondTenths",
+      ])}`)
+    );
+
+  await getOGanswer()
+    .then(AQPtimer.stop())
+    .then(
+      (document.getElementById(
+        "AQPtime"
+      ).innerHTML = `${AQPtimer.getTotalTimeValues().toString([
+        "hours",
+        "minutes",
+        "seconds",
+        "secondTenths",
+      ])}`)
+    );
+
   // You must return false to prevent the default form behavior
   return false;
 }
