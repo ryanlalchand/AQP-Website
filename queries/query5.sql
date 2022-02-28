@@ -1,1 +1,1 @@
-select AVG(O_TOTALPRICE) from orders;
+select count(*) from orders where o_orderkey < o_custkey;

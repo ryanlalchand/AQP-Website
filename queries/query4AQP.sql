@@ -1,1 +1,1 @@
-select count(*) from lineitemAQP where l_quantity > l_orderkey;
+select count(*) from lineitemAQP where l_quantity > 20;

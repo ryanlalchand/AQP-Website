@@ -36,13 +36,11 @@
       </p>
       <p>
         Query 4:
-        <code
-          >select count(*) from lineitem where l_quantity > l_orderkey;</code
-        >
+        <code>select count(*) from lineitem where l_quantity > 20;</code>
       </p>
       <p>
         Query 5:
-        <code>select AVG(O_TOTALPRICE) from orders; </code>
+        <code>select count(*) from orders where o_orderkey < o_custkey; </code>
       </p>
     </div>
 
