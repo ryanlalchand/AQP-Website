@@ -13,9 +13,28 @@
   <body class="content-center">
     <p>
       To run a comparison, select a query and the size of the database and click
-      submit. You can view the queries used
-      <a target="_blank" href="./queries.txt">here</a>.
+      submit. You can view the queries below.
     </p>
+    <p>
+      The sample ratio used is 1% the size of the original database (e.g., 1GB
+      database sample size equals 10MB).
+    </p>
+
+    <button class="accordion">Queries</button>
+    <div class="panel">
+      <p>
+        Query 1: <code>count(*) from lineitem where l_orderkey > 10; </code>
+      </p>
+      <p>
+        Query 2:
+        <code>select count(*) from orders where o_totalprice >= 400000; </code>
+      </p>
+      <p>
+        Query 3:
+        <code>select count(*) from lineitem where l_quantity < 20; </code>
+      </p>
+    </div>
+
     <form id="form">
       <label for="query">Select Query:</label>
       <select name="query" id="query">
@@ -36,7 +55,7 @@
     </form>
     <br /><br />
 
-    <table class="table-auto">
+    <table class="table-auto" style="overflow-x: auto">
       <thead>
         <tr>
           <th></th>
@@ -73,21 +92,15 @@
       <a
         target="_blank"
         href="http://rave.ohiolink.edu/etdc/view?acc_num=ysu1544264480082086"
-        >this paper</a
+        >this thesis</a
       >
-      by a former Data Lab student. <br />For the thesis defense of this topic,
-      check out the
-      <a
-        target="_blank"
-        href="https://github.com/YSU-Data-Lab/student_project_2018F_Wilson_David_CS2_on_Big_Data"
-        >GitHub</a
-      >.
+      by former Data Lab student David Wilson.
     </p>
     <p>
       Created by
       <a target="_blank" href="https://ryanlalchand.com">Ryan Lalchand</a
       >&nbsp;for the
-      <a target="_blank" href="http://datalab.ysu.edu">YSU Data Lab</a> ©
+      <a target="_blank" href="https://datalab.ysu.edu">YSU Data Lab</a> ©
       <script>
         document.write(new Date().getFullYear());
       </script>
@@ -99,6 +112,21 @@
       form.attachEvent("submit", processForm);
     } else {
       form.addEventListener("submit", processForm);
+    }
+
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+      acc[i].addEventListener("click", function () {
+        this.classList.toggle("active");
+        var panel = this.nextElementSibling;
+        if (panel.style.maxHeight) {
+          panel.style.maxHeight = null;
+        } else {
+          panel.style.maxHeight = panel.scrollHeight + "px";
+        }
+      });
     }
   </script>
 </html>
