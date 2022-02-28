@@ -1,0 +1,1 @@
+select count(*) from lineitemAQP where l_quantity > l_orderkey;

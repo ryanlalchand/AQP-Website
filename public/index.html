@@ -23,7 +23,8 @@
     <button class="accordion">Queries</button>
     <div class="panel">
       <p>
-        Query 1: <code>count(*) from lineitem where l_orderkey > 10; </code>
+        Query 1:
+        <code>select count(*) from lineitem where l_orderkey > 100; </code>
       </p>
       <p>
         Query 2:
@@ -33,6 +34,16 @@
         Query 3:
         <code>select count(*) from lineitem where l_quantity < 20; </code>
       </p>
+      <p>
+        Query 4:
+        <code
+          >select count(*) from lineitem where l_quantity > l_orderkey;</code
+        >
+      </p>
+      <p>
+        Query 5:
+        <code>select AVG(O_TOTALPRICE) from orders; </code>
+      </p>
     </div>
 
     <form id="form">
@@ -41,6 +52,8 @@
         <option value="query1">Query 1</option>
         <option value="query2">Query 2</option>
         <option value="query3">Query 3</option>
+        <option value="query4">Query 4</option>
+        <option value="query5">Query 5</option>
       </select>
 
       <label for="size">&nbsp; Select Size:</label>

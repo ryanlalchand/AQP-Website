@@ -1,0 +1,1 @@
+select AVG(O_TOTALPRICE) from orders;
